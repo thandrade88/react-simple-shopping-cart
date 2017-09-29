@@ -115,8 +115,9 @@ var Home = React.createClass({
 
         if (!isInCart) { cart.push({id: item.id, name: item.name, price: item.price, count: 1}) }
 
-        cart.forEach(function(item){
-            cart.totalcart += parseInt(item.price * item.count); //Aqui esta dando NaN
+        cart.forEach(function(item,i){
+            if(i===0) cart.totalcart = 0;
+            cart.totalcart += parseInt(item.price * item.count);
         });
     },
     render: function() {
