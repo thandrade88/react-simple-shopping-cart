@@ -117,7 +117,7 @@ var Home = React.createClass({
 
         cart.forEach(function(item,i){
             if(i===0) cart.totalcart = 0;
-            cart.totalcart += parseInt(item.price * item.count);
+            cart.totalcart += item.price * item.count;
         });
     },
     render: function() {
@@ -174,12 +174,22 @@ var Cart = React.createClass({
             return e.id !== item.id;
         });
 
-        document.querySelector('.tableRow.prod-' + item.id).style.display = "none";
+        cart.forEach(function(item,i){
+            if(i===0) cart.totalcart = 0;
+            cart.totalcart += item.price * item.count;
+        });
+
+        var lineRemove = document.querySelector('.tableRow.prod-' + item.id);
+        lineRemove.parentNode.removeChild( lineRemove );
+
+        var totalField = document.querySelector(".tableCell.valorfinal");
+        totalField.innerHTML = cart.totalcart ? "R$ "+cart.totalcart.toFixed(2) : "R$ 0,00 ";
     },
     render: function() {
         var removeItem = this.removeFromCart;
         return (
             <div>
+
             <header>
             <BackButton />
             <h2>Livraria Flip</h2>
@@ -206,7 +216,7 @@ var Cart = React.createClass({
             <div className="tableRow">
             <div className="tableCell total">Total</div>
             <div className="tableCell noleftborder">&nbsp;</div>
-        <div className="tableCell">R$ {cart.totalcart}</div>
+        <div className="tableCell valorfinal">R$ {cart.totalcart.toFixed(2)}</div>
         <div className="tableCell">&nbsp;</div>
         </div>
         </div>
